@@ -10,6 +10,9 @@ type Book {
 
 type Query {
   index: String!
+  secureDataWithNormalUser: String!
+  secureDataWithadmin: String!
+  login(email: String!, password: String!): String!
   books: [Book!]!
   bookById(bookId: Int!): Book!
 }
@@ -18,6 +21,7 @@ type Mutation {
   deleteBook(bookId: Int!): String!
   addBook(addBookArgs: AddBookArgs!): String!
   updateBook(updateBookArgs: UpdateBookArgs!): String!
+  addUser(addUserArgs: AddUserArgs!): String!
 }
 
 input AddBookArgs {
@@ -29,4 +33,12 @@ input UpdateBookArgs {
   id: Int!
   title: String!
   price: Int!
+}
+
+input AddUserArgs {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  role: String!
 }
