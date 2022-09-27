@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entity/user.entity';
 import { AddUserArgs } from './args/addUser.args';
+import { validate } from 'class-validator';
 
 @Injectable()
 export class UserService {
@@ -26,8 +27,18 @@ export class UserService {
     user.lastName = addUserArgs.lastName;
     user.email = addUserArgs.email;
     user.password = addUserArgs.password;
-    user.role = addUserArgs.role;
-    await this.userRepo.save(user);
-    return 'User save successfully';
+    console.log(addUserArgs);
+    if (addUserArgs.role) {
+      console.log('true');
+      user.role = addUserArgs.role;
+    }
+
+    const errors = await validate(user);
+    if (errors.length > 0) {
+      throw new Error(`Validation failed!`);
+    } else {
+      await this.userRepo.save(user);
+      return 'User save successfully';
+    }
   }
 }

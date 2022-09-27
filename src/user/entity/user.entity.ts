@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-
+import { IsEmail } from 'class-validator';
 @Entity('app_users')
 export class UserEntity {
   @PrimaryGeneratedColumn()
@@ -11,12 +11,13 @@ export class UserEntity {
   @Column()
   lastName: string;
 
-  @Column()
+  @Column({ unique: true })
+  @IsEmail()
   email: string;
 
   @Column()
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
   role: string;
 }

@@ -37,6 +37,7 @@ export class AppResolver {
       lastName: user.lastName,
       role: user.role,
     };
+    console.log('user', user);
     const token = sign(payload, 'rehmankey', {
       expiresIn: '30d',
     });
